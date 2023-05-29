@@ -3,7 +3,7 @@ using MiniTMS.Dominio.Endereco;
 using MiniTMS.Dominio.Pedido;
 using System.ComponentModel.DataAnnotations;
 
-namespace MiniTMS.Dominio.Destinatarios
+namespace MiniTMS.Dominio.Destinatario
 {
     public class Destinatarios : Entity
     {
@@ -17,7 +17,9 @@ namespace MiniTMS.Dominio.Destinatarios
         public string? RazaoSocial { get; set; }
 
         [Required(ErrorMessage = "Os campos do endereço são obrigatórios!")]
-        public List<Enderecos> Enderecos { get; set; }
+        public int EnderecoId { get; set; }
+
+        public Enderecos Endereco { get; set; }
 
         public List<Pedidos>? Pedidos { get; set; }
     }

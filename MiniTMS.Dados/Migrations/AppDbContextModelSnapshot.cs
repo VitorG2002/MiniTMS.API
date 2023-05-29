@@ -22,7 +22,7 @@ namespace MiniTMS.Dados.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("MiniTMS.Dominio.Clientes", b =>
+            modelBuilder.Entity("MiniTMS.Dominio.Cliente.Clientes", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -36,6 +36,10 @@ namespace MiniTMS.Dados.Migrations
                         .HasMaxLength(14)
                         .HasColumnType("nvarchar(14)")
                         .HasColumnName("cnpj_cpf");
+
+                    b.Property<int>("EnderecoId")
+                        .HasColumnType("int")
+                        .HasColumnName("endereco_id");
 
                     b.Property<string>("NomeFantasia")
                         .IsRequired()
@@ -49,10 +53,14 @@ namespace MiniTMS.Dados.Migrations
                     b.HasKey("Id")
                         .HasName("pk_clientes");
 
+                    b.HasIndex("EnderecoId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_clientes_endereco_id");
+
                     b.ToTable("clientes", (string)null);
                 });
 
-            modelBuilder.Entity("MiniTMS.Dominio.Destinatarios", b =>
+            modelBuilder.Entity("MiniTMS.Dominio.Destinatario.Destinatarios", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -67,6 +75,10 @@ namespace MiniTMS.Dados.Migrations
                         .HasColumnType("nvarchar(14)")
                         .HasColumnName("cnpj_cpf");
 
+                    b.Property<int>("EnderecoId")
+                        .HasColumnType("int")
+                        .HasColumnName("endereco_id");
+
                     b.Property<string>("NomeFantasia")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -79,10 +91,14 @@ namespace MiniTMS.Dados.Migrations
                     b.HasKey("Id")
                         .HasName("pk_destinatarios");
 
+                    b.HasIndex("EnderecoId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_destinatarios_endereco_id");
+
                     b.ToTable("destinatarios", (string)null);
                 });
 
-            modelBuilder.Entity("MiniTMS.Dominio.Enderecos", b =>
+            modelBuilder.Entity("MiniTMS.Dominio.Endereco.Enderecos", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -107,34 +123,23 @@ namespace MiniTMS.Dados.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("cidade");
 
-                    b.Property<int?>("ClientesId")
-                        .HasColumnType("int")
-                        .HasColumnName("clientes_id");
-
                     b.Property<string>("Complemento")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("complemento");
-
-                    b.Property<int?>("DestinatariosId")
-                        .HasColumnType("int")
-                        .HasColumnName("destinatarios_id");
 
                     b.Property<string>("Endereco")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("endereco");
 
-                    b.Property<int?>("FuncionariosId")
-                        .HasColumnType("int")
-                        .HasColumnName("funcionarios_id");
-
                     b.Property<int>("Numero")
                         .HasColumnType("int")
                         .HasColumnName("numero");
 
-                    b.Property<int>("Telefone")
+                    b.Property<string>("Telefone")
+                        .IsRequired()
                         .HasMaxLength(11)
-                        .HasColumnType("int")
+                        .HasColumnType("nvarchar(11)")
                         .HasColumnName("telefone");
 
                     b.Property<string>("UF")
@@ -146,19 +151,10 @@ namespace MiniTMS.Dados.Migrations
                     b.HasKey("Id")
                         .HasName("pk_enderecos");
 
-                    b.HasIndex("ClientesId")
-                        .HasDatabaseName("ix_enderecos_clientes_id");
-
-                    b.HasIndex("DestinatariosId")
-                        .HasDatabaseName("ix_enderecos_destinatarios_id");
-
-                    b.HasIndex("FuncionariosId")
-                        .HasDatabaseName("ix_enderecos_funcionarios_id");
-
                     b.ToTable("enderecos", (string)null);
                 });
 
-            modelBuilder.Entity("MiniTMS.Dominio.Funcionarios.Funcionarios", b =>
+            modelBuilder.Entity("MiniTMS.Dominio.Funcionario.Funcionarios", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -172,6 +168,10 @@ namespace MiniTMS.Dados.Migrations
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)")
                         .HasColumnName("cpf");
+
+                    b.Property<int>("EnderecoId")
+                        .HasColumnType("int")
+                        .HasColumnName("endereco_id");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -191,12 +191,16 @@ namespace MiniTMS.Dados.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EnderecoId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_funcionarios_endereco_id");
+
                     b.ToTable("funcionarios", (string)null);
 
                     b.UseTptMappingStrategy();
                 });
 
-            modelBuilder.Entity("MiniTMS.Dominio.Pedidos", b =>
+            modelBuilder.Entity("MiniTMS.Dominio.Pedido.Pedidos", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -265,10 +269,13 @@ namespace MiniTMS.Dados.Migrations
                     b.HasIndex("MotoristasId")
                         .HasDatabaseName("ix_pedidos_motoristas_id");
 
+                    b.HasIndex("StatusId")
+                        .HasDatabaseName("ix_pedidos_status_id");
+
                     b.ToTable("pedidos", (string)null);
                 });
 
-            modelBuilder.Entity("MiniTMS.Dominio.Status", b =>
+            modelBuilder.Entity("MiniTMS.Dominio.Status.Statuses", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -288,9 +295,9 @@ namespace MiniTMS.Dados.Migrations
                     b.ToTable("status", (string)null);
                 });
 
-            modelBuilder.Entity("MiniTMS.Dominio.Funcionarios.Motoristas", b =>
+            modelBuilder.Entity("MiniTMS.Dominio.Funcionario.Motoristas", b =>
                 {
-                    b.HasBaseType("MiniTMS.Dominio.Funcionarios.Funcionarios");
+                    b.HasBaseType("MiniTMS.Dominio.Funcionario.Funcionarios");
 
                     b.Property<string>("Carro")
                         .IsRequired()
@@ -306,78 +313,119 @@ namespace MiniTMS.Dados.Migrations
                     b.ToTable("motoristas");
                 });
 
-            modelBuilder.Entity("MiniTMS.Dominio.Enderecos", b =>
+            modelBuilder.Entity("MiniTMS.Dominio.Cliente.Clientes", b =>
                 {
-                    b.HasOne("MiniTMS.Dominio.Clientes", null)
-                        .WithMany("Enderecos")
-                        .HasForeignKey("ClientesId")
-                        .HasConstraintName("fk_enderecos_clientes_clientes_id");
+                    b.HasOne("MiniTMS.Dominio.Endereco.Enderecos", "Endereco")
+                        .WithOne("Cliente")
+                        .HasForeignKey("MiniTMS.Dominio.Cliente.Clientes", "EnderecoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_clientes_enderecos_endereco_id");
 
-                    b.HasOne("MiniTMS.Dominio.Destinatarios", null)
-                        .WithMany("Enderecos")
-                        .HasForeignKey("DestinatariosId")
-                        .HasConstraintName("fk_enderecos_destinatarios_destinatarios_id");
-
-                    b.HasOne("MiniTMS.Dominio.Funcionarios.Funcionarios", null)
-                        .WithMany("Enderecos")
-                        .HasForeignKey("FuncionariosId")
-                        .HasConstraintName("fk_enderecos_funcionarios_funcionarios_id");
+                    b.Navigation("Endereco");
                 });
 
-            modelBuilder.Entity("MiniTMS.Dominio.Pedidos", b =>
+            modelBuilder.Entity("MiniTMS.Dominio.Destinatario.Destinatarios", b =>
                 {
-                    b.HasOne("MiniTMS.Dominio.Clientes", null)
+                    b.HasOne("MiniTMS.Dominio.Endereco.Enderecos", "Endereco")
+                        .WithOne("Destinatario")
+                        .HasForeignKey("MiniTMS.Dominio.Destinatario.Destinatarios", "EnderecoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_destinatarios_enderecos_endereco_id");
+
+                    b.Navigation("Endereco");
+                });
+
+            modelBuilder.Entity("MiniTMS.Dominio.Funcionario.Funcionarios", b =>
+                {
+                    b.HasOne("MiniTMS.Dominio.Endereco.Enderecos", "Endereco")
+                        .WithOne("Funcionario")
+                        .HasForeignKey("MiniTMS.Dominio.Funcionario.Funcionarios", "EnderecoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_funcionarios_enderecos_endereco_id");
+
+                    b.Navigation("Endereco");
+                });
+
+            modelBuilder.Entity("MiniTMS.Dominio.Pedido.Pedidos", b =>
+                {
+                    b.HasOne("MiniTMS.Dominio.Cliente.Clientes", "Cliente")
                         .WithMany("Pedidos")
                         .HasForeignKey("ClientesId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("fk_pedidos_clientes_clientes_id");
 
-                    b.HasOne("MiniTMS.Dominio.Destinatarios", null)
+                    b.HasOne("MiniTMS.Dominio.Destinatario.Destinatarios", "Destinatario")
                         .WithMany("Pedidos")
                         .HasForeignKey("DestinatariosId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("fk_pedidos_destinatarios_destinatarios_id");
 
-                    b.HasOne("MiniTMS.Dominio.Funcionarios.Motoristas", null)
+                    b.HasOne("MiniTMS.Dominio.Funcionario.Motoristas", "Motoristas")
                         .WithMany("Pedidos")
                         .HasForeignKey("MotoristasId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("fk_pedidos_motoristas_motoristas_id");
+
+                    b.HasOne("MiniTMS.Dominio.Status.Statuses", "Status")
+                        .WithMany("Pedidos")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired()
+                        .HasConstraintName("fk_pedidos_status_status_id");
+
+                    b.Navigation("Cliente");
+
+                    b.Navigation("Destinatario");
+
+                    b.Navigation("Motoristas");
+
+                    b.Navigation("Status");
                 });
 
-            modelBuilder.Entity("MiniTMS.Dominio.Funcionarios.Motoristas", b =>
+            modelBuilder.Entity("MiniTMS.Dominio.Funcionario.Motoristas", b =>
                 {
-                    b.HasOne("MiniTMS.Dominio.Funcionarios.Funcionarios", null)
+                    b.HasOne("MiniTMS.Dominio.Funcionario.Funcionarios", null)
                         .WithOne()
-                        .HasForeignKey("MiniTMS.Dominio.Funcionarios.Motoristas", "Id")
+                        .HasForeignKey("MiniTMS.Dominio.Funcionario.Motoristas", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_motoristas_funcionarios_id");
                 });
 
-            modelBuilder.Entity("MiniTMS.Dominio.Clientes", b =>
+            modelBuilder.Entity("MiniTMS.Dominio.Cliente.Clientes", b =>
                 {
-                    b.Navigation("Enderecos");
-
                     b.Navigation("Pedidos");
                 });
 
-            modelBuilder.Entity("MiniTMS.Dominio.Destinatarios", b =>
+            modelBuilder.Entity("MiniTMS.Dominio.Destinatario.Destinatarios", b =>
                 {
-                    b.Navigation("Enderecos");
-
                     b.Navigation("Pedidos");
                 });
 
-            modelBuilder.Entity("MiniTMS.Dominio.Funcionarios.Funcionarios", b =>
+            modelBuilder.Entity("MiniTMS.Dominio.Endereco.Enderecos", b =>
                 {
-                    b.Navigation("Enderecos");
+                    b.Navigation("Cliente")
+                        .IsRequired();
+
+                    b.Navigation("Destinatario")
+                        .IsRequired();
+
+                    b.Navigation("Funcionario")
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("MiniTMS.Dominio.Funcionarios.Motoristas", b =>
+            modelBuilder.Entity("MiniTMS.Dominio.Status.Statuses", b =>
+                {
+                    b.Navigation("Pedidos");
+                });
+
+            modelBuilder.Entity("MiniTMS.Dominio.Funcionario.Motoristas", b =>
                 {
                     b.Navigation("Pedidos");
                 });

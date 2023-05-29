@@ -12,49 +12,23 @@ namespace MiniTMS.Dados.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "clientes",
+                name: "enderecos",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    cnpj_cpf = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: false),
-                    nome_fantasia = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    razao_social = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    telefone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
+                    cep = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
+                    endereco = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    numero = table.Column<int>(type: "int", nullable: false),
+                    complemento = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    bairro = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    cidade = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    uf = table.Column<string>(type: "nvarchar(2)", maxLength: 2, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_clientes", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "destinatarios",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    cnpj_cpf = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: false),
-                    nome_fantasia = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    razao_social = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_destinatarios", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "funcionarios",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    sobrenome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    cpf = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
-                    rg = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_funcionarios", x => x.id);
+                    table.PrimaryKey("pk_enderecos", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -71,41 +45,70 @@ namespace MiniTMS.Dados.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "enderecos",
+                name: "clientes",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    telefone = table.Column<int>(type: "int", maxLength: 11, nullable: false),
-                    cep = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
-                    endereco = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    numero = table.Column<int>(type: "int", nullable: false),
-                    complemento = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    bairro = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    cidade = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    uf = table.Column<string>(type: "nvarchar(2)", maxLength: 2, nullable: false),
-                    clientes_id = table.Column<int>(type: "int", nullable: true),
-                    destinatarios_id = table.Column<int>(type: "int", nullable: true),
-                    funcionarios_id = table.Column<int>(type: "int", nullable: true)
+                    cnpj_cpf = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: false),
+                    nome_fantasia = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    razao_social = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    endereco_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_enderecos", x => x.id);
+                    table.PrimaryKey("pk_clientes", x => x.id);
                     table.ForeignKey(
-                        name: "fk_enderecos_clientes_clientes_id",
-                        column: x => x.clientes_id,
-                        principalTable: "clientes",
-                        principalColumn: "id");
+                        name: "fk_clientes_enderecos_endereco_id",
+                        column: x => x.endereco_id,
+                        principalTable: "enderecos",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "destinatarios",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    cnpj_cpf = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: false),
+                    nome_fantasia = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    razao_social = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    endereco_id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_destinatarios", x => x.id);
                     table.ForeignKey(
-                        name: "fk_enderecos_destinatarios_destinatarios_id",
-                        column: x => x.destinatarios_id,
-                        principalTable: "destinatarios",
-                        principalColumn: "id");
+                        name: "fk_destinatarios_enderecos_endereco_id",
+                        column: x => x.endereco_id,
+                        principalTable: "enderecos",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "funcionarios",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    sobrenome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    cpf = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
+                    rg = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false),
+                    endereco_id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_funcionarios", x => x.id);
                     table.ForeignKey(
-                        name: "fk_enderecos_funcionarios_funcionarios_id",
-                        column: x => x.funcionarios_id,
-                        principalTable: "funcionarios",
-                        principalColumn: "id");
+                        name: "fk_funcionarios_enderecos_endereco_id",
+                        column: x => x.endereco_id,
+                        principalTable: "enderecos",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -153,36 +156,41 @@ namespace MiniTMS.Dados.Migrations
                         name: "fk_pedidos_clientes_clientes_id",
                         column: x => x.clientes_id,
                         principalTable: "clientes",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                     table.ForeignKey(
                         name: "fk_pedidos_destinatarios_destinatarios_id",
                         column: x => x.destinatarios_id,
                         principalTable: "destinatarios",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                     table.ForeignKey(
                         name: "fk_pedidos_motoristas_motoristas_id",
                         column: x => x.motoristas_id,
                         principalTable: "motoristas",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
+                    table.ForeignKey(
+                        name: "fk_pedidos_status_status_id",
+                        column: x => x.status_id,
+                        principalTable: "status",
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "ix_enderecos_clientes_id",
-                table: "enderecos",
-                column: "clientes_id");
+                name: "ix_clientes_endereco_id",
+                table: "clientes",
+                column: "endereco_id",
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "ix_enderecos_destinatarios_id",
-                table: "enderecos",
-                column: "destinatarios_id");
+                name: "ix_destinatarios_endereco_id",
+                table: "destinatarios",
+                column: "endereco_id",
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "ix_enderecos_funcionarios_id",
-                table: "enderecos",
-                column: "funcionarios_id");
+                name: "ix_funcionarios_endereco_id",
+                table: "funcionarios",
+                column: "endereco_id",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "ix_pedidos_clientes_id",
@@ -198,19 +206,18 @@ namespace MiniTMS.Dados.Migrations
                 name: "ix_pedidos_motoristas_id",
                 table: "pedidos",
                 column: "motoristas_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_pedidos_status_id",
+                table: "pedidos",
+                column: "status_id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "enderecos");
-
-            migrationBuilder.DropTable(
                 name: "pedidos");
-
-            migrationBuilder.DropTable(
-                name: "status");
 
             migrationBuilder.DropTable(
                 name: "clientes");
@@ -222,7 +229,13 @@ namespace MiniTMS.Dados.Migrations
                 name: "motoristas");
 
             migrationBuilder.DropTable(
+                name: "status");
+
+            migrationBuilder.DropTable(
                 name: "funcionarios");
+
+            migrationBuilder.DropTable(
+                name: "enderecos");
         }
     }
 }

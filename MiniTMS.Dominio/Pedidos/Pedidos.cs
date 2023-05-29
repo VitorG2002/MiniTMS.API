@@ -1,4 +1,8 @@
 ﻿using MiniTMS.Dominio._Base;
+using MiniTMS.Dominio.Cliente;
+using MiniTMS.Dominio.Destinatario;
+using MiniTMS.Dominio.Funcionario;
+using MiniTMS.Dominio.Status;
 using System.ComponentModel.DataAnnotations;
 
 namespace MiniTMS.Dominio.Pedido
@@ -28,17 +32,23 @@ namespace MiniTMS.Dominio.Pedido
         [Required(ErrorMessage = "ClientesId é um campo obrigatório!")]
         public int ClientesId { get; set; }
 
+        public Clientes Cliente { get; set; }
+
         [Required(ErrorMessage = "DestinatariosId é um campo obrigatório!")]
         public int DestinatariosId { get; set; }
+        public Destinatarios Destinatario { get; set; }
 
         [Required(ErrorMessage = "StatusId é um campo obrigatório!")]
         public int StatusId { get; set; }
+
+        public Statuses Status { get; set; }
 
         public string? NroExterno { get; set; }
 
         [Required(ErrorMessage = "MotoristasId é um campo obrigatório!")]
         public int MotoristasId { get; set; }
 
+        public Motoristas Motoristas { get; set; }
 
     }
 }

@@ -19,4 +19,8 @@
     <ProjectReference Include="..\MiniTMS.Dominio\MiniTMS.Dominio.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

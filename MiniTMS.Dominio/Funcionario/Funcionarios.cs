@@ -3,7 +3,7 @@ using MiniTMS.Dominio.Endereco;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MiniTMS.Dominio.Funcionarios
+namespace MiniTMS.Dominio.Funcionario
 {
     [Table("funcionarios")]
     public class Funcionarios : Entity
@@ -21,7 +21,8 @@ namespace MiniTMS.Dominio.Funcionarios
         public string Rg { get; set; }
 
         [Required(ErrorMessage = "Os campos do endereço são obrigatórios!")]
-        public List<Enderecos> Enderecos { get; set; }
+        public int EnderecoId { get; set; }
 
+        public Enderecos Endereco { get; set; }
     }
 }

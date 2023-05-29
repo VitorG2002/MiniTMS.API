@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MiniTMS.Dominio.Funcionarios
+namespace MiniTMS.Dominio.Funcionario
 {
     [Table("motoristas")]
     public class Motoristas : Funcionarios

@@ -13,7 +13,6 @@ namespace MiniTMS.IoC
         {
             services.AddScoped(typeof(IRepositorio<>), typeof(RepositorioBase<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            //services.AddScoped<>
             services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(configuration["ConnectionString"])
             .UseSnakeCaseNamingConvention());

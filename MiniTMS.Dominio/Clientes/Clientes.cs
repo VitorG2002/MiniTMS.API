@@ -3,11 +3,11 @@ using MiniTMS.Dominio.Endereco;
 using MiniTMS.Dominio.Pedido;
 using System.ComponentModel.DataAnnotations;
 
-namespace MiniTMS.Dominio.Clientes
+namespace MiniTMS.Dominio.Cliente
 {
     public class Clientes : Entity
     {
-        [MaxLength(14)]
+        [MaxLength(14, ErrorMessage = "Cnpj/Cpf pode conter até 14 dígitos!")]
         [Required(ErrorMessage = "Cnpj/Cpf é um campo obrigatório!")]
         public string CnpjCpf { get; set; }
 
@@ -17,7 +17,9 @@ namespace MiniTMS.Dominio.Clientes
         public string? RazaoSocial { get; set; }
 
         [Required(ErrorMessage = "Os campos do endereço são obrigatórios!")]
-        public List<Enderecos> Enderecos { get; set; }
+        public int EnderecoId { get; set; }
+
+        public Enderecos Endereco { get; set; }
 
         public List<Pedidos>? Pedidos { get; set; }
     }
