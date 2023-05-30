@@ -20,15 +20,9 @@ namespace MiniTMS.Dominio.Pedido
 
         public int ClientesId { get; set; }
 
-
         public int DestinatariosId { get; set; }
 
-
         public int StatusId { get; set; }
-
-
-
-        public string? NroExterno { get; set; }
 
         public int EntregadoresId { get; set; }
 

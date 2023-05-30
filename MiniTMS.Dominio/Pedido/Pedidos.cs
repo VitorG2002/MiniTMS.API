@@ -32,8 +32,6 @@ namespace MiniTMS.Dominio.Pedido
         [Required(ErrorMessage = "StatusId é um campo obrigatório!")]
         public int StatusId { get; set; }
 
-        public string? NroExterno { get; set; }
-
         [Required(ErrorMessage = "EntregadoresId é um campo obrigatório!")]
         public int EntregadoresId { get; set; }
 

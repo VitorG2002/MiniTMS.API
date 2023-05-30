@@ -10,6 +10,8 @@ namespace MiniTMS.Dominio.Pedido
 
         void AdicionarPedidoComProdutos(Pedidos pedidos, List<Produtos> produtos);
 
+        void EditarPedido(Pedidos pedido);
+
         List<Produtos> BuscarProdutosRelacionados(List<int> ids);
     }
 }

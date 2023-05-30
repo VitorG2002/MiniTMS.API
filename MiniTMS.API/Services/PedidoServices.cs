@@ -47,7 +47,7 @@ namespace MiniTMS.API.Services
         public Pedidos Editar(UpdatePedidoDto pedidoDto)
         {
             Pedidos pedido = _repositorio.BuscarPorIdComRelacionamentos(pedidoDto.Id);
-            if(pedido == null)
+            if (pedido == null)
             {
                 throw new ArgumentException("Nenhum pedido encontrado!");
             }
@@ -57,9 +57,11 @@ namespace MiniTMS.API.Services
             pedido = _mapper.Map(pedidoDto, pedido);
             pedido.Produtos = produtos;
 
-            _repositorio.Update(pedido);
+            _repositorio.EditarPedido(pedido);
             return pedido;
         }
+
+        
 
         public bool Excluir(int id)
         {

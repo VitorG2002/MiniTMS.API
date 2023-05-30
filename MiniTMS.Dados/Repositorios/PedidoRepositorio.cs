@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MiniTMS.Dados.Contextos;
+using MiniTMS.Dominio._Base;
 using MiniTMS.Dominio.Pedido;
 using MiniTMS.Dominio.Produto;
 
@@ -42,10 +43,20 @@ namespace MiniTMS.Dados.Repositorios
             return query.Any() ? query.First() : null;
         }
 
-        public void AdicionarPedidoComProdutos(Pedidos pedidos, List<Produtos> produtos)
+        public void AdicionarPedidoComProdutos(Pedidos pedido, List<Produtos> produtos)
         {
-            pedidos.Produtos = produtos;
-            Add(pedidos);
+            pedido.Produtos = produtos;
+
+            CalcularValorEFrete(pedido);
+
+            Add(pedido);
+            _context.SaveChanges();
+        }
+
+        public void EditarPedido(Pedidos pedido)
+        {
+            CalcularValorEFrete(pedido);
+            _context.Set<Pedidos>().Update(pedido);
             _context.SaveChanges();
         }
 
@@ -53,6 +64,18 @@ namespace MiniTMS.Dados.Repositorios
         {
             List<Produtos> produtos = _context.Set<Produtos>().Where(p => ids.Contains(p.Id)).ToList();
             return produtos;
+        }
+
+        private static void CalcularValorEFrete(Pedidos pedido)
+        {
+            double pesoTotal = 0;
+            foreach (var produto in pedido.Produtos)
+            {
+                pesoTotal += produto.Peso;
+                pedido.Valor += produto.Valor;
+            }
+            pedido.Frete = (pesoTotal/2) + 15; //Apenas inventei uma regra pra simular uma cotação de frete
+            pedido.Valor += pedido.Frete;
         }
     }
 }

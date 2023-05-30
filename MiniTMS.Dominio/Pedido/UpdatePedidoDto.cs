@@ -1,9 +1,4 @@
-﻿using MiniTMS.Dominio.Cliente;
-using MiniTMS.Dominio.Destinatario;
-using MiniTMS.Dominio.Entregador;
-using MiniTMS.Dominio.Produto;
-using MiniTMS.Dominio.Status;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace MiniTMS.Dominio.Pedido
 {
@@ -12,12 +7,6 @@ namespace MiniTMS.Dominio.Pedido
     {
         [Required]
         public int Id { get; set; }
-
-        [Required(ErrorMessage = "Valor é um campo obrigatório!")]
-        public double Valor { get; set; }
-
-        [Required(ErrorMessage = "Frete é um campo obrigatório!")]
-        public double Frete { get; set; }
 
         [Required(ErrorMessage = "Data Prevista é um campo obrigatório!")]
         public DateTime DataDeEntregaPrevista { get; set; }
@@ -38,8 +27,6 @@ namespace MiniTMS.Dominio.Pedido
 
         [Required(ErrorMessage = "ProdutosIds é um campo obrigatório!")]
         public List<int> ProdutosIds { get; set; }
-
-        public string? NroExterno { get; set; }
 
         [Required(ErrorMessage = "EntregadoresId é um campo obrigatório!")]
         public int EntregadoresId { get; set; }
