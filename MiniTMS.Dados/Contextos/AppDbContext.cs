@@ -40,9 +40,9 @@ namespace MiniTMS.Dados.Contextos
                         .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Pedidos>()
-                        .HasOne(p => p.Motoristas)
+                        .HasOne(p => p.Entregador)
                         .WithMany(m => m.Pedidos)
-                        .HasForeignKey(p => p.MotoristasId)
+                        .HasForeignKey(p => p.EntregadoresId)
                         .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Pedidos>()

@@ -1,28 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MiniTMS.API._Util;
 using MiniTMS.API.Interfaces;
-using MiniTMS.Dominio.Cliente;
-using MiniTMS.Dominio.Entregador;
+using MiniTMS.Dominio.Pedido;
 
 namespace MiniTMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClienteController : ControllerBase
+    public class PedidoController : ControllerBase
     {
-        private readonly ICliente _services;
+        private readonly IPedido _services;
 
-        public ClienteController(ICliente services)
+        public PedidoController(IPedido services)
         {
             _services = services;
         }
 
-        ///<summary>Buscas todos clientes e seu endereços</summary>
+        ///<summary>Buscas todos pedidos e seus relacionamentos</summary>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ReadClienteDto>))]
-        public IActionResult BuscarListaDeClientes()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ReadPedidoDto>))]
+        public IActionResult BuscarListaDePedidos()
         {
             try
             {
@@ -38,13 +36,13 @@ namespace MiniTMS.API.Controllers
             }
         }
 
-        ///<summary>Busca um cliente específico e seu endereço, usando o id do cliente</summary>
+        ///<summary>Busca um pedido específico e seus relacionamentos, usando o id do pedido</summary>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ReadClienteDto))]
-        public IActionResult BuscarClientePorId(int id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ReadPedidoDto))]
+        public IActionResult BuscarPedidoPorId(int id)
         {
             try
             {
@@ -63,19 +61,16 @@ namespace MiniTMS.API.Controllers
             }
         }
 
-        ///<summary>Adiciona um cliente e seu endereço</summary>
+        ///<summary>Adiciona um pedido e seus relacionamentos</summary>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        public IActionResult AdicionarCliente(CreateClienteDto cliente)
+        public IActionResult AdicionarPedido(CreatePedidoDto pedido)
         {
             try
             {
-                if (!Util.ValidarCPF(cliente.CnpjCpf) && !Util.ValidarCNPJ(cliente.CnpjCpf))
-                    return BadRequest("Campo Cnpj/Cpf Inválido!");
-
-                var result = _services.Adicionar(cliente);
+                var result = _services.Adicionar(pedido);
                 if (result != null)
                     return Created("", result);
 
@@ -88,20 +83,20 @@ namespace MiniTMS.API.Controllers
         }
 
 
-        ///<summary>Edita um cliente e seu endereço</summary>
+        ///<summary>Edita um pedido e seus relacionamentos</summary>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public IActionResult EditarCliente(UpdateClienteDto cliente)
+        public IActionResult EditarPedido(UpdatePedidoDto pedido)
         {
             try
             {
-                if (cliente == null || cliente.Id == 0)
+                if (pedido == null || pedido.Id == 0)
                     return BadRequest("Id inválido!");
 
-                var result = _services.Editar(cliente);
+                var result = _services.Editar(pedido);
                 if (result != null)
                     return NoContent();
 
@@ -114,12 +109,12 @@ namespace MiniTMS.API.Controllers
         }
 
 
-        ///<summary>Deleta um cliente e seu endereço</summary>
+        ///<summary>Deleta um pedido e seus relacionamentos</summary>
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult ExcluirCliente(int id)
+        public IActionResult ExcluirPedido(int id)
         {
             try
             {

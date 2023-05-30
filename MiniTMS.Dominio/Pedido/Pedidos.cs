@@ -16,29 +16,34 @@ namespace MiniTMS.Dominio.Pedido
         [Required(ErrorMessage = "Frete é um campo obrigatório!")]
         public double Frete { get; set; }
 
-        [Required(ErrorMessage = "Prazo de Entrega é um campo obrigatório!")]
-        public DateTime PrazoDeEntrega { get; set; }
+        [Required(ErrorMessage = "Data Prevista é um campo obrigatório!")]
+        public DateTime DataDeEntregaPrevista { get; set; }
+
+        [Required(ErrorMessage = "Data de entrega é um campo obrigatório!")]
+        public DateTime DataDeEntrega { get; set; }
 
         [Required(ErrorMessage = "ClientesId é um campo obrigatório!")]
         public int ClientesId { get; set; }
 
-        public Clientes Cliente { get; set; }
-
         [Required(ErrorMessage = "DestinatariosId é um campo obrigatório!")]
         public int DestinatariosId { get; set; }
-        public Destinatarios Destinatario { get; set; }
+
 
         [Required(ErrorMessage = "StatusId é um campo obrigatório!")]
         public int StatusId { get; set; }
 
-        public Statuses Status { get; set; }
-
         public string? NroExterno { get; set; }
 
-        [Required(ErrorMessage = "MotoristasId é um campo obrigatório!")]
-        public int MotoristasId { get; set; }
+        [Required(ErrorMessage = "EntregadoresId é um campo obrigatório!")]
+        public int EntregadoresId { get; set; }
 
-        public Entregadores Motoristas { get; set; }
+        public Clientes Cliente { get; set; }
+
+        public Destinatarios Destinatario { get; set; }
+
+        public Statuses Status { get; set; }
+
+        public Entregadores Entregador { get; set; }
 
         public List<Produtos> Produtos { get; set; }
 

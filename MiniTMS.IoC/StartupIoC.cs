@@ -7,6 +7,7 @@ using MiniTMS.Dominio._Base;
 using MiniTMS.Dominio.Cliente;
 using MiniTMS.Dominio.Destinatario;
 using MiniTMS.Dominio.Entregador;
+using MiniTMS.Dominio.Pedido;
 
 namespace MiniTMS.IoC
 {
@@ -19,6 +20,7 @@ namespace MiniTMS.IoC
             services.AddScoped<IClienteRepositorio, ClienteRepositorio>();
             services.AddScoped<IDestinatarioRepositorio, DestinatarioRepositorio>();
             services.AddScoped<IEntregadorRepositorio, EntregadorRepositorio>();
+            services.AddScoped<IPedidoRepositorio, PedidoRepositorio>();
             services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(configuration["ConnectionString"])
             .UseSnakeCaseNamingConvention());

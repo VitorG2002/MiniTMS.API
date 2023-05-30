@@ -12,7 +12,7 @@ using MiniTMS.Dados.Contextos;
 namespace MiniTMS.Dados.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230530031623_CriacaoDoBd")]
+    [Migration("20230530035918_CriacaoDoBd")]
     partial class CriacaoDoBd
     {
         /// <inheritdoc />
@@ -196,6 +196,10 @@ namespace MiniTMS.Dados.Migrations
                         .HasColumnType("nvarchar(11)")
                         .HasColumnName("cpf");
 
+                    b.Property<DateTime>("DataNascimento")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("data_nascimento");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -245,25 +249,29 @@ namespace MiniTMS.Dados.Migrations
                         .HasColumnType("int")
                         .HasColumnName("clientes_id");
 
+                    b.Property<DateTime>("DataDeEntrega")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("data_de_entrega");
+
+                    b.Property<DateTime>("DataDeEntregaPrevista")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("data_de_entrega_prevista");
+
                     b.Property<int>("DestinatariosId")
                         .HasColumnType("int")
                         .HasColumnName("destinatarios_id");
+
+                    b.Property<int>("EntregadoresId")
+                        .HasColumnType("int")
+                        .HasColumnName("entregadores_id");
 
                     b.Property<double>("Frete")
                         .HasColumnType("float")
                         .HasColumnName("frete");
 
-                    b.Property<int>("MotoristasId")
-                        .HasColumnType("int")
-                        .HasColumnName("motoristas_id");
-
                     b.Property<string>("NroExterno")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("nro_externo");
-
-                    b.Property<DateTime>("PrazoDeEntrega")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("prazo_de_entrega");
 
                     b.Property<int>("StatusId")
                         .HasColumnType("int")
@@ -282,8 +290,8 @@ namespace MiniTMS.Dados.Migrations
                     b.HasIndex("DestinatariosId")
                         .HasDatabaseName("ix_pedidos_destinatarios_id");
 
-                    b.HasIndex("MotoristasId")
-                        .HasDatabaseName("ix_pedidos_motoristas_id");
+                    b.HasIndex("EntregadoresId")
+                        .HasDatabaseName("ix_pedidos_entregadores_id");
 
                     b.HasIndex("StatusId")
                         .HasDatabaseName("ix_pedidos_status_id");
@@ -405,12 +413,12 @@ namespace MiniTMS.Dados.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_pedidos_destinatarios_destinatarios_id");
 
-                    b.HasOne("MiniTMS.Dominio.Entregador.Entregadores", "Motoristas")
+                    b.HasOne("MiniTMS.Dominio.Entregador.Entregadores", "Entregador")
                         .WithMany("Pedidos")
-                        .HasForeignKey("MotoristasId")
+                        .HasForeignKey("EntregadoresId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
-                        .HasConstraintName("fk_pedidos_entregadores_motoristas_id");
+                        .HasConstraintName("fk_pedidos_entregadores_entregadores_id");
 
                     b.HasOne("MiniTMS.Dominio.Status.Statuses", "Status")
                         .WithMany("Pedidos")
@@ -423,7 +431,7 @@ namespace MiniTMS.Dados.Migrations
 
                     b.Navigation("Destinatario");
 
-                    b.Navigation("Motoristas");
+                    b.Navigation("Entregador");
 
                     b.Navigation("Status");
                 });

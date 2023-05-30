@@ -49,6 +49,7 @@ namespace MiniTMS.Dados.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     sobrenome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    data_nascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
                     cpf = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     rg = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: false),
                     carro = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -136,12 +137,13 @@ namespace MiniTMS.Dados.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     valor = table.Column<double>(type: "float", nullable: false),
                     frete = table.Column<double>(type: "float", nullable: false),
-                    prazo_de_entrega = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    data_de_entrega_prevista = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    data_de_entrega = table.Column<DateTime>(type: "datetime2", nullable: false),
                     clientes_id = table.Column<int>(type: "int", nullable: false),
                     destinatarios_id = table.Column<int>(type: "int", nullable: false),
                     status_id = table.Column<int>(type: "int", nullable: false),
                     nro_externo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    motoristas_id = table.Column<int>(type: "int", nullable: false)
+                    entregadores_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -157,8 +159,8 @@ namespace MiniTMS.Dados.Migrations
                         principalTable: "destinatarios",
                         principalColumn: "id");
                     table.ForeignKey(
-                        name: "fk_pedidos_entregadores_motoristas_id",
-                        column: x => x.motoristas_id,
+                        name: "fk_pedidos_entregadores_entregadores_id",
+                        column: x => x.entregadores_id,
                         principalTable: "entregadores",
                         principalColumn: "id");
                     table.ForeignKey(
@@ -248,9 +250,9 @@ namespace MiniTMS.Dados.Migrations
                 column: "destinatarios_id");
 
             migrationBuilder.CreateIndex(
-                name: "ix_pedidos_motoristas_id",
+                name: "ix_pedidos_entregadores_id",
                 table: "pedidos",
-                column: "motoristas_id");
+                column: "entregadores_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_pedidos_status_id",

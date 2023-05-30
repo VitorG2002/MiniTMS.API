@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MiniTMS.API._Util;
 using MiniTMS.API.Interfaces;
+using MiniTMS.Dominio.Cliente;
 using MiniTMS.Dominio.Destinatario;
 
 namespace MiniTMS.API.Controllers
@@ -70,6 +72,9 @@ namespace MiniTMS.API.Controllers
         {
             try
             {
+                if (!Util.ValidarCPF(destinatario.CnpjCpf) && !Util.ValidarCNPJ(destinatario.CnpjCpf))
+                    return BadRequest("Campo Cnpj/Cpf Inválido!");
+
                 var result = _services.Adicionar(destinatario);
                 if (result != null)
                     return Created("", result);

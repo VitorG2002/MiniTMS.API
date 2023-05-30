@@ -13,6 +13,9 @@ namespace MiniTMS.Dominio.Entregador
         [Required(ErrorMessage = "Sobrenome é um campo obrigatório!")]
         public string Sobrenome { get; set; }
 
+        [Required(ErrorMessage = "Data de nascimento é um campo obrigatório!")]
+        public DateTime DataNascimento { get; set; }
+
         [Required(ErrorMessage = "CPF é um campo obrigatório!")]
         [MaxLength(11, ErrorMessage = "CPF só pode conter 11 dígitos!")]
         public string Cpf { get; set; }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MiniTMS.API.Interfaces;
+using MiniTMS.API._Util;
 using MiniTMS.Dominio.Entregador;
 
 namespace MiniTMS.API.Controllers
@@ -71,6 +72,9 @@ namespace MiniTMS.API.Controllers
         {
             try
             {
+                if (!Util.ValidarCPF(entregador.Cpf) || !Util.ValidarRG(entregador.Rg))
+                    return BadRequest("Cpf ou Rg inválidos!");
+
                 var result = _services.Adicionar(entregador);
                 if (result != null)
                     return Created("", result);

@@ -19,6 +19,7 @@ builder.Services.AddScoped<IDestinatario, DestinatarioServices>();
 builder.Services.AddScoped<IEntregador, EntregadorServices>();
 builder.Services.AddScoped<IStatus, StatusServices>();
 builder.Services.AddScoped<IProduto, ProdutoServices>();
+builder.Services.AddScoped<IPedido, PedidoServices>();
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
