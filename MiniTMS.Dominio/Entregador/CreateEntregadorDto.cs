@@ -11,10 +11,12 @@ namespace MiniTMS.Dominio.Entregador
         [Required(ErrorMessage = "Sobrenome é um campo obrigatório!")]
         public string Sobrenome { get; set; }
 
+        [Required(ErrorMessage = "CPF é um campo obrigatório!")]
         [MaxLength(11, ErrorMessage = "CPF só pode conter 11 dígitos!")]
         public string Cpf { get; set; }
 
-        [MaxLength(7, ErrorMessage = "Rg só pode conter 7 dígitos!")]
+        [Required(ErrorMessage = "RG é um campo obrigatório!")]
+        [MaxLength(9, ErrorMessage = "Rg só pode conter 9 dígitos!")]
         public string Rg { get; set; }
 
         [Required(ErrorMessage = "Carro é um campo obrigatório!")]
@@ -24,6 +26,6 @@ namespace MiniTMS.Dominio.Entregador
         [Required(ErrorMessage = "Placa é um campo obrigatório!")]
         public string Placa { get; set; }
 
-        public CreateEnderecoDto Endereco { get; set; }
+        public UpdateEnderecoDto Endereco { get; set; }
     }
 }

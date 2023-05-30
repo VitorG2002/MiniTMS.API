@@ -4,6 +4,7 @@ using MiniTMS.Dominio.Destinatario;
 using MiniTMS.Dominio.Endereco;
 using MiniTMS.Dominio.Entregador;
 using MiniTMS.Dominio.Pedido;
+using MiniTMS.Dominio.Produto;
 using MiniTMS.Dominio.Status;
 
 namespace MiniTMS.Dados.Contextos
@@ -19,8 +20,8 @@ namespace MiniTMS.Dados.Contextos
         public DbSet<Destinatarios> Destinatarios { get; set; }
         public DbSet<Clientes> Clientes { get; set; }
         public DbSet<Statuses> Status { get; set; }
-        public DbSet<Entregadores> Funcionarios { get; set; }
-        public DbSet<Entregadores> Motoristas { get; set; }
+        public DbSet<Entregadores> Entregadores { get; set; }
+        public DbSet<Produtos> Produtos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -67,6 +68,26 @@ namespace MiniTMS.Dados.Contextos
                         .WithOne(e => e.Entregador)
                         .HasForeignKey<Enderecos>(e => e.EntregadorId)
                         .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Statuses>()
+                        .HasIndex(s => s.Nome)
+                        .IsUnique();
+
+            modelBuilder.Entity<Destinatarios>()
+                        .HasIndex(d => d.CnpjCpf)
+                        .IsUnique();
+
+            modelBuilder.Entity<Clientes>()
+                        .HasIndex(c => c.CnpjCpf)
+                        .IsUnique();
+
+            modelBuilder.Entity<Entregadores>()
+                        .HasIndex(e => e.Cpf)
+                        .IsUnique();
+
+            modelBuilder.Entity<Entregadores>()
+                        .HasIndex(e => e.Rg)
+                        .IsUnique();
         }
 
         public async Task Commit()

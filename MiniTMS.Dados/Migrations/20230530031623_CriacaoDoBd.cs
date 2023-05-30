@@ -50,7 +50,7 @@ namespace MiniTMS.Dados.Migrations
                     nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     sobrenome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     cpf = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
-                    rg = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false),
+                    rg = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: false),
                     carro = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     placa = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false)
                 },
@@ -60,12 +60,27 @@ namespace MiniTMS.Dados.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "produtos",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    valor = table.Column<double>(type: "float", nullable: false),
+                    peso = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_produtos", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "status",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    nome = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    nome = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -120,10 +135,6 @@ namespace MiniTMS.Dados.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     valor = table.Column<double>(type: "float", nullable: false),
-                    peso = table.Column<double>(type: "float", nullable: false),
-                    comprimento = table.Column<double>(type: "float", nullable: false),
-                    altura = table.Column<double>(type: "float", nullable: false),
-                    profundidade = table.Column<double>(type: "float", nullable: false),
                     frete = table.Column<double>(type: "float", nullable: false),
                     prazo_de_entrega = table.Column<DateTime>(type: "datetime2", nullable: false),
                     clientes_id = table.Column<int>(type: "int", nullable: false),
@@ -157,6 +168,42 @@ namespace MiniTMS.Dados.Migrations
                         principalColumn: "id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "pedidos_produtos",
+                columns: table => new
+                {
+                    pedidos_id = table.Column<int>(type: "int", nullable: false),
+                    produtos_id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_pedidos_produtos", x => new { x.pedidos_id, x.produtos_id });
+                    table.ForeignKey(
+                        name: "fk_pedidos_produtos_pedidos_pedidos_id",
+                        column: x => x.pedidos_id,
+                        principalTable: "pedidos",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_pedidos_produtos_produtos_produtos_id",
+                        column: x => x.produtos_id,
+                        principalTable: "produtos",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "ix_clientes_cnpj_cpf",
+                table: "clientes",
+                column: "cnpj_cpf",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "ix_destinatarios_cnpj_cpf",
+                table: "destinatarios",
+                column: "cnpj_cpf",
+                unique: true);
+
             migrationBuilder.CreateIndex(
                 name: "ix_enderecos_cliente_id",
                 table: "enderecos",
@@ -179,6 +226,18 @@ namespace MiniTMS.Dados.Migrations
                 filter: "[entregador_id] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "ix_entregadores_cpf",
+                table: "entregadores",
+                column: "cpf",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "ix_entregadores_rg",
+                table: "entregadores",
+                column: "rg",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "ix_pedidos_clientes_id",
                 table: "pedidos",
                 column: "clientes_id");
@@ -197,6 +256,17 @@ namespace MiniTMS.Dados.Migrations
                 name: "ix_pedidos_status_id",
                 table: "pedidos",
                 column: "status_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_pedidos_produtos_produtos_id",
+                table: "pedidos_produtos",
+                column: "produtos_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_status_nome",
+                table: "status",
+                column: "nome",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -206,7 +276,13 @@ namespace MiniTMS.Dados.Migrations
                 name: "enderecos");
 
             migrationBuilder.DropTable(
+                name: "pedidos_produtos");
+
+            migrationBuilder.DropTable(
                 name: "pedidos");
+
+            migrationBuilder.DropTable(
+                name: "produtos");
 
             migrationBuilder.DropTable(
                 name: "clientes");

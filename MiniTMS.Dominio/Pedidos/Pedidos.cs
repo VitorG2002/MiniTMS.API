@@ -2,6 +2,7 @@
 using MiniTMS.Dominio.Cliente;
 using MiniTMS.Dominio.Destinatario;
 using MiniTMS.Dominio.Entregador;
+using MiniTMS.Dominio.Produto;
 using MiniTMS.Dominio.Status;
 using System.ComponentModel.DataAnnotations;
 
@@ -12,18 +13,7 @@ namespace MiniTMS.Dominio.Pedido
         [Required(ErrorMessage = "Valor é um campo obrigatório!")]
         public double Valor { get; set; }
 
-        [Required(ErrorMessage = "Peso é um campo obrigatório!")]
-        public double Peso { get; set; }
-
-        [Required(ErrorMessage = "Comprimento é um campo obrigatório!")]
-        public double Comprimento { get; set; }
-
-        [Required(ErrorMessage = "Altura é um campo obrigatório!")]
-        public double Altura { get; set; }
-
-        [Required(ErrorMessage = "Profundidade é um campo obrigatório!")]
-        public double Profundidade { get; set; }
-
+        [Required(ErrorMessage = "Frete é um campo obrigatório!")]
         public double Frete { get; set; }
 
         [Required(ErrorMessage = "Prazo de Entrega é um campo obrigatório!")]
@@ -48,7 +38,9 @@ namespace MiniTMS.Dominio.Pedido
         [Required(ErrorMessage = "MotoristasId é um campo obrigatório!")]
         public int MotoristasId { get; set; }
 
-        public Entregador.Entregadores Motoristas { get; set; }
+        public Entregadores Motoristas { get; set; }
+
+        public List<Produtos> Produtos { get; set; }
 
     }
 }

@@ -7,9 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniTMS.API", "MiniTMS.API\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniTMS.Dados", "MiniTMS.Dados\MiniTMS.Dados.csproj", "{586B25C0-30A4-4687-A08F-2F8B153770E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniTMS.Dominio", "MiniTMS.Dominio\MiniTMS.Dominio.csproj", "{0A3F3D7A-34EA-4549-A168-CDB1D1F46BBD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniTMS.Dominio", "MiniTMS.Dominio\MiniTMS.Dominio.csproj", "{0A3F3D7A-34EA-4549-A168-CDB1D1F46BBD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniTMS.IoC", "MiniTMS.IoC\MiniTMS.IoC.csproj", "{1CD97886-5D95-4997-9D2F-799FFB4B1B1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniTMS.IoC", "MiniTMS.IoC\MiniTMS.IoC.csproj", "{1CD97886-5D95-4997-9D2F-799FFB4B1B1C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3395FB25-04B6-4AA8-98C5-B72B281E08B1}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

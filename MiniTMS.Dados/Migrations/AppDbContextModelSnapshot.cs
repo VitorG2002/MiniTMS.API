@@ -49,6 +49,10 @@ namespace MiniTMS.Dados.Migrations
                     b.HasKey("Id")
                         .HasName("pk_clientes");
 
+                    b.HasIndex("CnpjCpf")
+                        .IsUnique()
+                        .HasDatabaseName("ix_clientes_cnpj_cpf");
+
                     b.ToTable("clientes", (string)null);
                 });
 
@@ -78,6 +82,10 @@ namespace MiniTMS.Dados.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_destinatarios");
+
+                    b.HasIndex("CnpjCpf")
+                        .IsUnique()
+                        .HasDatabaseName("ix_destinatarios_cnpj_cpf");
 
                     b.ToTable("destinatarios", (string)null);
                 });
@@ -198,8 +206,8 @@ namespace MiniTMS.Dados.Migrations
 
                     b.Property<string>("Rg")
                         .IsRequired()
-                        .HasMaxLength(7)
-                        .HasColumnType("nvarchar(7)")
+                        .HasMaxLength(9)
+                        .HasColumnType("nvarchar(9)")
                         .HasColumnName("rg");
 
                     b.Property<string>("Sobrenome")
@@ -209,6 +217,14 @@ namespace MiniTMS.Dados.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_entregadores");
+
+                    b.HasIndex("Cpf")
+                        .IsUnique()
+                        .HasDatabaseName("ix_entregadores_cpf");
+
+                    b.HasIndex("Rg")
+                        .IsUnique()
+                        .HasDatabaseName("ix_entregadores_rg");
 
                     b.ToTable("entregadores", (string)null);
                 });
@@ -222,17 +238,9 @@ namespace MiniTMS.Dados.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<double>("Altura")
-                        .HasColumnType("float")
-                        .HasColumnName("altura");
-
                     b.Property<int>("ClientesId")
                         .HasColumnType("int")
                         .HasColumnName("clientes_id");
-
-                    b.Property<double>("Comprimento")
-                        .HasColumnType("float")
-                        .HasColumnName("comprimento");
 
                     b.Property<int>("DestinatariosId")
                         .HasColumnType("int")
@@ -250,17 +258,9 @@ namespace MiniTMS.Dados.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("nro_externo");
 
-                    b.Property<double>("Peso")
-                        .HasColumnType("float")
-                        .HasColumnName("peso");
-
                     b.Property<DateTime>("PrazoDeEntrega")
                         .HasColumnType("datetime2")
                         .HasColumnName("prazo_de_entrega");
-
-                    b.Property<double>("Profundidade")
-                        .HasColumnType("float")
-                        .HasColumnName("profundidade");
 
                     b.Property<int>("StatusId")
                         .HasColumnType("int")
@@ -288,7 +288,7 @@ namespace MiniTMS.Dados.Migrations
                     b.ToTable("pedidos", (string)null);
                 });
 
-            modelBuilder.Entity("MiniTMS.Dominio.Status.Statuses", b =>
+            modelBuilder.Entity("MiniTMS.Dominio.Produto.Produtos", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -302,10 +302,61 @@ namespace MiniTMS.Dados.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("nome");
 
+                    b.Property<double>("Peso")
+                        .HasColumnType("float")
+                        .HasColumnName("peso");
+
+                    b.Property<double>("Valor")
+                        .HasColumnType("float")
+                        .HasColumnName("valor");
+
+                    b.HasKey("Id")
+                        .HasName("pk_produtos");
+
+                    b.ToTable("produtos", (string)null);
+                });
+
+            modelBuilder.Entity("MiniTMS.Dominio.Status.Statuses", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("nome");
+
                     b.HasKey("Id")
                         .HasName("pk_status");
 
+                    b.HasIndex("Nome")
+                        .IsUnique()
+                        .HasDatabaseName("ix_status_nome");
+
                     b.ToTable("status", (string)null);
+                });
+
+            modelBuilder.Entity("PedidosProdutos", b =>
+                {
+                    b.Property<int>("PedidosId")
+                        .HasColumnType("int")
+                        .HasColumnName("pedidos_id");
+
+                    b.Property<int>("ProdutosId")
+                        .HasColumnType("int")
+                        .HasColumnName("produtos_id");
+
+                    b.HasKey("PedidosId", "ProdutosId")
+                        .HasName("pk_pedidos_produtos");
+
+                    b.HasIndex("ProdutosId")
+                        .HasDatabaseName("ix_pedidos_produtos_produtos_id");
+
+                    b.ToTable("pedidos_produtos", (string)null);
                 });
 
             modelBuilder.Entity("MiniTMS.Dominio.Endereco.Enderecos", b =>
@@ -372,6 +423,23 @@ namespace MiniTMS.Dados.Migrations
                     b.Navigation("Motoristas");
 
                     b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("PedidosProdutos", b =>
+                {
+                    b.HasOne("MiniTMS.Dominio.Pedido.Pedidos", null)
+                        .WithMany()
+                        .HasForeignKey("PedidosId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_pedidos_produtos_pedidos_pedidos_id");
+
+                    b.HasOne("MiniTMS.Dominio.Produto.Produtos", null)
+                        .WithMany()
+                        .HasForeignKey("ProdutosId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_pedidos_produtos_produtos_produtos_id");
                 });
 
             modelBuilder.Entity("MiniTMS.Dominio.Cliente.Clientes", b =>
