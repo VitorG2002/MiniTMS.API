@@ -1,26 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MiniTMS.API.Interfaces;
-using MiniTMS.Dominio.Destinatario;
+using MiniTMS.Dominio.Entregador;
 
 namespace MiniTMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DestinatarioController : ControllerBase
+    public class EntregadorController : ControllerBase
     {
-        private readonly IDestinatario _services;
 
-        public DestinatarioController(IDestinatario services)
+        private readonly IEntregador _services;
+
+        public EntregadorController(IEntregador services)
         {
             _services = services;
         }
 
-        ///<summary>Buscas todos destinatários e seu endereços</summary>
+        ///<summary>Buscas todos entregadores e seu endereços</summary>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ReadDestinatarioDto>))]
-        public IActionResult BuscarListaDeDestinatarios()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ReadEntregadorDto>))]
+        public IActionResult BuscarListaDeEntregadores()
         {
             try
             {
@@ -36,13 +37,13 @@ namespace MiniTMS.API.Controllers
             }
         }
 
-        ///<summary>Busca um destinatário específico e seu endereço, usando o id do destinatario</summary>
+        ///<summary>Busca um entregadores específico e seu endereço, usando o id do entregadores</summary>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ReadDestinatarioDto))]
-        public IActionResult BuscarDestinatarioPorId(int id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ReadEntregadorDto))]
+        public IActionResult BuscarEntregadorPorId(int id)
         {
             try
             {
@@ -61,16 +62,16 @@ namespace MiniTMS.API.Controllers
             }
         }
 
-        ///<summary>Adiciona um destinatário e seu endereço</summary>
+        ///<summary>Adiciona um entregador e seu endereço</summary>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        public IActionResult AdicionarDestinatario(CreateDestinatarioDto destinatario)
+        public IActionResult AdicionarEntregador(CreateEntregadorDto entregador)
         {
             try
             {
-                var result = _services.Adicionar(destinatario);
+                var result = _services.Adicionar(entregador);
                 if (result != null)
                     return Created("", result);
 
@@ -83,20 +84,20 @@ namespace MiniTMS.API.Controllers
         }
 
 
-        ///<summary>Edita um destinatário e seu endereço</summary>
+        ///<summary>Edita um entregador e seu endereço</summary>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public IActionResult EditarDestinatario(UpdateDestinatarioDto destinatario)
+        public IActionResult EditarEntregador(UpdateEntregadorDto entregador)
         {
             try
             {
-                if (destinatario == null || destinatario.Id == 0)
+                if (entregador == null || entregador.Id == 0)
                     return BadRequest("Id inválido!");
 
-                var result = _services.Editar(destinatario);
+                var result = _services.Editar(entregador);
                 if (result != null)
                     return NoContent();
 
@@ -109,12 +110,12 @@ namespace MiniTMS.API.Controllers
         }
 
 
-        ///<summary>Deleta um destinatário e seu endereço</summary>
+        ///<summary>Deleta um entregador e seu endereço</summary>
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult ExcluirDestinatario(int id)
+        public IActionResult ExcluirEntregador(int id)
         {
             try
             {

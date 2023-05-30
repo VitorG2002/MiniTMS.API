@@ -1,6 +1,5 @@
 using MiniTMS.API.Interfaces;
 using MiniTMS.API.Services;
-using MiniTMS.Dominio._Base;
 using MiniTMS.IoC;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
@@ -17,6 +16,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 StartupIoC.ConfigureServices(builder.Services, builder.Configuration);
 builder.Services.AddScoped<ICliente, ClienteServices>();
 builder.Services.AddScoped<IDestinatario, DestinatarioServices>();
+builder.Services.AddScoped<IEntregador, EntregadorServices>();
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
