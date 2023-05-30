@@ -1,12 +1,11 @@
 ﻿using MiniTMS.Dominio._Base;
 using MiniTMS.Dominio.Endereco;
+using MiniTMS.Dominio.Pedido;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MiniTMS.Dominio.Funcionario
+namespace MiniTMS.Dominio.Entregador
 {
-    [Table("funcionarios")]
-    public class Funcionarios : Entity
+    public class Entregadores : Entity
     {
         [Required(ErrorMessage = "Nome é um campo obrigatório!")]
         public string Nome { get; set; }
@@ -20,9 +19,15 @@ namespace MiniTMS.Dominio.Funcionario
         [MaxLength(7, ErrorMessage = "Rg só pode conter 7 dígitos!")]
         public string Rg { get; set; }
 
-        [Required(ErrorMessage = "Os campos do endereço são obrigatórios!")]
-        public int EnderecoId { get; set; }
+        [Required(ErrorMessage = "Carro é um campo obrigatório!")]
+        public string Carro { get; set; }
+
+        [MaxLength(7, ErrorMessage = "A placa do carro tem no máximo 7 dígitos!")]
+        [Required(ErrorMessage = "Placa é um campo obrigatório!")]
+        public string Placa { get; set; }
 
         public Enderecos Endereco { get; set; }
+
+        public List<Pedidos>? Pedidos { get; set; }
     }
 }

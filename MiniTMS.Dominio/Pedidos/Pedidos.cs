@@ -1,7 +1,7 @@
 ﻿using MiniTMS.Dominio._Base;
 using MiniTMS.Dominio.Cliente;
 using MiniTMS.Dominio.Destinatario;
-using MiniTMS.Dominio.Funcionario;
+using MiniTMS.Dominio.Entregador;
 using MiniTMS.Dominio.Status;
 using System.ComponentModel.DataAnnotations;
 
@@ -48,7 +48,7 @@ namespace MiniTMS.Dominio.Pedido
         [Required(ErrorMessage = "MotoristasId é um campo obrigatório!")]
         public int MotoristasId { get; set; }
 
-        public Motoristas Motoristas { get; set; }
+        public Entregador.Entregadores Motoristas { get; set; }
 
     }
 }

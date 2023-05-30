@@ -9,7 +9,10 @@ namespace MiniTMS.API.Profiles
         {
             CreateMap<CreateClienteDto, Clientes>()
             .ForMember(dest => dest.Endereco, opt => opt.MapFrom(src => src.Endereco));
-            CreateMap<Clientes, ReadClienteDto>();
+            CreateMap<Clientes, ReadClienteDto>()
+                .ForMember(dest => dest.Endereco, opt => opt.MapFrom(src => src.Endereco));
+            CreateMap<UpdateClienteDto, Clientes>()
+            .ForMember(dest => dest.Endereco, opt => opt.MapFrom(src => src.Endereco));
 
         }
     }

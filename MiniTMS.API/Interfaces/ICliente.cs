@@ -8,6 +8,10 @@ namespace MiniTMS.API.Interfaces
 
         ReadClienteDto BuscarPorId(int id);
 
-        Clientes Adicionar(CreateClienteDto cliente);
+        CreateClienteDto Adicionar(CreateClienteDto cliente);
+
+        Clientes Editar(UpdateClienteDto clienteDto);
+
+        bool Excluir(int id);
     }
 }

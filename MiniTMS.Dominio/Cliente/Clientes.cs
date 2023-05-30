@@ -16,9 +16,6 @@ namespace MiniTMS.Dominio.Cliente
 
         public string? RazaoSocial { get; set; }
 
-        [Required(ErrorMessage = "Os campos do endereço são obrigatórios!")]
-        public int EnderecoId { get; set; }
-
         public Enderecos Endereco { get; set; }
 
         public List<Pedidos>? Pedidos { get; set; }

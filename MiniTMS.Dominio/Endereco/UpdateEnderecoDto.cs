@@ -1,12 +1,8 @@
-﻿using MiniTMS.Dominio._Base;
-using MiniTMS.Dominio.Cliente;
-using MiniTMS.Dominio.Destinatario;
-using MiniTMS.Dominio.Entregador;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace MiniTMS.Dominio.Endereco
 {
-    public class Enderecos : Entity
+    public class UpdateEnderecoDto
     {
         [MaxLength(11, ErrorMessage = "Telefone só pode conter 11 dígitos!")]
         [Required(ErrorMessage = "Telefone é um campo obrigatório!")]
@@ -33,18 +29,5 @@ namespace MiniTMS.Dominio.Endereco
         [MaxLength(2, ErrorMessage = "UF só pode conter 2 dígitos!")]
         [Required(ErrorMessage = "UF é um campo obrigatório!")]
         public string UF { get; set; }
-
-        public Entregadores? Entregador { get; set; }
-
-        public int? EntregadorId { get; set; }
-
-        public Destinatarios? Destinatario { get; set; }
-
-        public int? DestinatarioId { get; set; }
-
-        public Clientes? Cliente { get; set; }
-
-        public int? ClienteId { get; set; }
-
     }
 }

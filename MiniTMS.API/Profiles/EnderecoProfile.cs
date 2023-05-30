@@ -8,6 +8,8 @@ namespace MiniTMS.API.Profiles
         public EnderecoProfile()
         {
             CreateMap<CreateEnderecoDto, Enderecos>();
+            CreateMap<Enderecos, ReadEnderecoDto>();
+            CreateMap<UpdateEnderecoDto, Enderecos>();
         }
     }
 }

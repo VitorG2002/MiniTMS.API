@@ -2,7 +2,7 @@
 {
     public class ReadEnderecoDto
     {
-        public int Telefone { get; set; }
+        public string Telefone { get; set; }
 
         public string Cep { get; set; }
 

@@ -1,26 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MiniTMS.API.Interfaces;
 using MiniTMS.Dominio.Cliente;
+using MiniTMS.Dominio.Destinatario;
 
 namespace MiniTMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClienteController : ControllerBase
+    public class DestinatarioController : ControllerBase
     {
-        private readonly ICliente _services;
+        private readonly IDestinatario _services;
 
-        public ClienteController(ICliente services)
+        public DestinatarioController(IDestinatario services)
         {
             _services = services;
         }
 
-        ///<summary>Buscas todos clientes e seu endereços</summary>
+        ///<summary>Buscas todos destinatários e seu endereços</summary>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ReadClienteDto>))]
-        public IActionResult BuscarListaDeClientes()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ReadDestinatarioDto>))]
+        public IActionResult BuscarListaDeDestinatarios()
         {
             try
             {
@@ -36,13 +37,13 @@ namespace MiniTMS.API.Controllers
             }
         }
 
-        ///<summary>Busca um cliente específico e seu endereço, usando o id do cliente</summary>
+        ///<summary>Busca um destinatário específico e seu endereço, usando o id do cliente</summary>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ReadClienteDto))]
-        public IActionResult BuscarClientePorId(int id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ReadDestinatarioDto))]
+        public IActionResult BuscarDestinatarioPorId(int id)
         {
             try
             {
@@ -61,16 +62,16 @@ namespace MiniTMS.API.Controllers
             }
         }
 
-        ///<summary>Adiciona um cliente e seu endereço</summary>
+        ///<summary>Adiciona um destinatário e seu endereço</summary>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        public IActionResult AdicionarCliente(CreateClienteDto cliente)
+        public IActionResult AdicionarCliente(CreateDestinatarioDto destinatario)
         {
             try
             {
-                var result = _services.Adicionar(cliente);
+                var result = _services.Adicionar(destinatario);
                 if (result != null)
                     return Created("", result);
 
@@ -83,20 +84,20 @@ namespace MiniTMS.API.Controllers
         }
 
 
-        ///<summary>Edita um cliente e seu endereço</summary>
+        ///<summary>Edita um destinatário e seu endereço</summary>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public IActionResult EditarCliente(UpdateClienteDto cliente)
+        public IActionResult EditarCliente(UpdateDestinatarioDto destinatario)
         {
             try
             {
-                if (cliente == null || cliente.Id == 0)
+                if (destinatario == null || destinatario.Id == 0)
                     return BadRequest("Id inválido!");
 
-                var result = _services.Editar(cliente);
+                var result = _services.Editar(destinatario);
                 if (result != null)
                     return NoContent();
 
@@ -109,7 +110,7 @@ namespace MiniTMS.API.Controllers
         }
 
 
-        ///<summary>Deleta um cliente e seu endereço</summary>
+        ///<summary>Deleta um destinatário e seu endereço</summary>
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
