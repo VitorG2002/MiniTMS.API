@@ -77,9 +77,9 @@ namespace MiniTMS.API.Controllers
             }
             catch (Exception ex)
             {
-                if (ex.InnerException != null && ex.InnerException.Message.Contains("ix_produto_nome"))
+                if (ex.InnerException != null)
                 {
-                    return StatusCode(500, "Já existe um produto com esse nome, use outro nome ou delete o produto existente!");
+                    return StatusCode(500, ex.InnerException.Message);
                 }
                 return StatusCode(500, ex.Message);
             }

@@ -83,6 +83,10 @@ namespace MiniTMS.API.Controllers
             }
             catch (Exception ex)
             {
+                if (ex.InnerException != null && ex.InnerException.Message.Contains("ix_clientes_cnpj_cpf"))
+                {
+                    return StatusCode(500, "Já existe um cliente com esse Cnpj/Cpf!");
+                }
                 return StatusCode(500, ex.Message);
             }
         }
@@ -109,6 +113,10 @@ namespace MiniTMS.API.Controllers
             }
             catch (Exception ex)
             {
+                if (ex.InnerException != null && ex.InnerException.Message.Contains("ix_clientes_cnpj_cpf"))
+                {
+                    return StatusCode(500, "Já existe um cliente com esse Cnpj/Cpf!");
+                }
                 return StatusCode(500, ex.Message);
             }
         }

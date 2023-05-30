@@ -85,45 +85,5 @@ namespace MiniTMS.API._Util
             // Verificar se os dígitos verificadores estão corretos
             return int.Parse(cnpj[12].ToString()) == primeiroDigitoVerificador && int.Parse(cnpj[13].ToString()) == segundoDigitoVerificador;
         }
-
-        public static bool ValidarRG(string rg)
-        {
-            // Remove caracteres especiais do RG, como pontos e traços
-            rg = rg.Replace(".", "").Replace("-", "");
-
-            // Verifica se o RG possui 9 dígitos
-            if (rg.Length != 9)
-            {
-                return false;
-            }
-
-            // Extrai os 8 primeiros dígitos do RG (parte numérica)
-            string parteNumerica = rg.Substring(0, 8);
-
-            // Extrai o último dígito do RG (dígito verificador)
-            char digitoVerificador = rg[8];
-
-            // Calcula o dígito verificador esperado
-            int soma = 0;
-            int peso = 2;
-
-            for (int i = parteNumerica.Length - 1; i >= 0; i--)
-            {
-                int digito = int.Parse(parteNumerica[i].ToString());
-                soma += digito * peso;
-                peso++;
-            }
-
-            int resto = soma % 11;
-            int digitoVerificadorEsperado = 11 - resto;
-
-            // Verifica se o dígito verificador é válido
-            if (digitoVerificadorEsperado >= 10)
-            {
-                digitoVerificadorEsperado = 0;
-            }
-
-            return digitoVerificador == digitoVerificadorEsperado.ToString()[0];
-        }
     }
 }

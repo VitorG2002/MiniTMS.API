@@ -9,6 +9,7 @@ namespace MiniTMS.Dominio.Pedido
 {
     public class ReadPedidoDto
     {
+        public int Id { get; set; }
         public double Valor { get; set; }
 
         public double Frete { get; set; }

@@ -47,7 +47,15 @@ namespace MiniTMS.API.Services
         public Pedidos Editar(UpdatePedidoDto pedidoDto)
         {
             Pedidos pedido = _repositorio.BuscarPorIdComRelacionamentos(pedidoDto.Id);
+            if(pedido == null)
+            {
+                throw new ArgumentException("Nenhum pedido encontrado!");
+            }
+
+            List<Produtos> produtos = _repositorio.BuscarProdutosRelacionados(pedidoDto.ProdutosIds);
+
             pedido = _mapper.Map(pedidoDto, pedido);
+            pedido.Produtos = produtos;
 
             _repositorio.Update(pedido);
             return pedido;

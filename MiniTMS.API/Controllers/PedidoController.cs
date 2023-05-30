@@ -32,6 +32,9 @@ namespace MiniTMS.API.Controllers
             }
             catch (Exception ex)
             {
+                if (ex.InnerException != null)
+                    return StatusCode(500, ex.InnerException.Message);
+
                 return StatusCode(500, ex.Message);
             }
         }
@@ -78,6 +81,20 @@ namespace MiniTMS.API.Controllers
             }
             catch (Exception ex)
             {
+                if (ex.InnerException != null)
+                {
+                    if (ex.InnerException.Message.Contains("fk_pedidos_clientes_clientes_id"))
+                    return StatusCode(500, "Id de cliente inexistente!");
+
+                    if (ex.InnerException.Message.Contains("fk_pedidos_destinatarios_destinatarios_id"))
+                        return StatusCode(500, "Id de destinatário inexistente!");
+
+                    if (ex.InnerException.Message.Contains("fk_pedidos_entregadores_entregadores_id"))
+                        return StatusCode(500, "Id de entregador inexistente!");
+
+                    if (ex.InnerException.Message.Contains("fk_pedidos_status_status_id"))
+                        return StatusCode(500, "Id de status inexistente!");
+                }
                 return StatusCode(500, ex.Message);
             }
         }
@@ -104,6 +121,20 @@ namespace MiniTMS.API.Controllers
             }
             catch (Exception ex)
             {
+                if (ex.InnerException != null)
+                {
+                    if (ex.InnerException.Message.Contains("fk_pedidos_clientes_clientes_id"))
+                        return StatusCode(500, "Id de cliente inexistente!");
+
+                    if (ex.InnerException.Message.Contains("fk_pedidos_destinatarios_destinatarios_id"))
+                        return StatusCode(500, "Id de destinatário inexistente!");
+
+                    if (ex.InnerException.Message.Contains("fk_pedidos_entregadores_entregadores_id"))
+                        return StatusCode(500, "Id de entregador inexistente!");
+
+                    if (ex.InnerException.Message.Contains("fk_pedidos_status_status_id"))
+                        return StatusCode(500, "Id de status inexistente!");
+                }
                 return StatusCode(500, ex.Message);
             }
         }

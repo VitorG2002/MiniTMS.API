@@ -108,6 +108,10 @@ namespace MiniTMS.API.Controllers
             }
             catch (Exception ex)
             {
+                if (ex.InnerException != null && ex.InnerException.Message.Contains("ix_status_nome"))
+                {
+                    return StatusCode(500, "Já existe um status com esse nome, use outro nome ou delete o status existente!");
+                }
                 return StatusCode(500, ex.Message);
             }
         }

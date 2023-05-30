@@ -72,7 +72,7 @@ namespace MiniTMS.API.Controllers
         {
             try
             {
-                if (!Util.ValidarCPF(entregador.Cpf) || !Util.ValidarRG(entregador.Rg))
+                if (!Util.ValidarCPF(entregador.Cpf))
                     return BadRequest("Cpf ou Rg inválidos!");
 
                 var result = _services.Adicionar(entregador);
@@ -83,6 +83,10 @@ namespace MiniTMS.API.Controllers
             }
             catch (Exception ex)
             {
+                if (ex.InnerException != null && (ex.InnerException.Message.Contains("ix_entregadores_cpf") || ex.InnerException.Message.Contains("ix_entregadores_rg")))
+                {
+                    return StatusCode(500, "Já existe um entregador com o cpf ou rg digitados!");
+                }
                 return StatusCode(500, ex.Message);
             }
         }
@@ -101,6 +105,9 @@ namespace MiniTMS.API.Controllers
                 if (entregador == null || entregador.Id == 0)
                     return BadRequest("Id inválido!");
 
+                if (!Util.ValidarCPF(entregador.Cpf))
+                    return BadRequest("Cpf ou Rg inválidos!");
+
                 var result = _services.Editar(entregador);
                 if (result != null)
                     return NoContent();
@@ -109,6 +116,10 @@ namespace MiniTMS.API.Controllers
             }
             catch (Exception ex)
             {
+                if (ex.InnerException != null && (ex.InnerException.Message.Contains("ix_entregadores_cpf") || ex.InnerException.Message.Contains("ix_entregadores_rg")))
+                {
+                    return StatusCode(500, "Já existe um entregador com o cpf ou rg digitados!");
+                }
                 return StatusCode(500, ex.Message);
             }
         }

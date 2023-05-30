@@ -24,12 +24,12 @@ namespace MiniTMS.API.Profiles
          .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
          .ForMember(dest => dest.Produtos, opt => opt.MapFrom(src => src.Produtos));
 
-            CreateMap<UpdatePedidoDto, Pedidos>()
+            CreateMap<UpdatePedidoDto, Pedidos>();
          //.ForMember(dest => dest.Destinatario, opt => opt.MapFrom(src => src.Destinatario))
          //.ForMember(dest => dest.Cliente, opt => opt.MapFrom(src => src.Cliente))
          //.ForMember(dest => dest.Entregador, opt => opt.MapFrom(src => src.Entregador))
          //.ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
-         .ForMember(dest => dest.Produtos, opt => opt.MapFrom(src => src.Produtos));
+         //.ForMember(dest => dest.Produtos, opt => opt.MapFrom(src => src.Produtos));
         }
     }
 }

@@ -33,15 +33,5 @@ namespace MiniTMS.Dominio.Pedido
 
         [Required(ErrorMessage = "EntregadoresId é um campo obrigatório!")]
         public int EntregadoresId { get; set; }
-
-        //public ReadClienteDto Cliente { get; set; }
-
-        //public ReadDestinatarioDto Destinatario { get; set; }
-
-        //public ReadStatusDto Status { get; set; }
-
-        //public ReadEntregadorDto Entregador { get; set; }
-
-        //public List<ReadProdutoDto> Produtos { get; set; }
     }
 }
