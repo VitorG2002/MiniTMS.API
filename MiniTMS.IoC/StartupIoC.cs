@@ -22,7 +22,7 @@ namespace MiniTMS.IoC
             services.AddScoped<IEntregadorRepositorio, EntregadorRepositorio>();
             services.AddScoped<IPedidoRepositorio, PedidoRepositorio>();
             services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer(configuration["ConnectionString"])
+            options.UseNpgsql(configuration["ConnectionString"])
             .UseSnakeCaseNamingConvention());
             services.AddOptions();
         }

@@ -1,12 +1,13 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace MiniTMS.Dados.Migrations
 {
     /// <inheritdoc />
-    public partial class CriacaoDoBd : Migration
+    public partial class CriacaoBdPostgres : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,11 +16,11 @@ namespace MiniTMS.Dados.Migrations
                 name: "clientes",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    cnpj_cpf = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: false),
-                    nome_fantasia = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    razao_social = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    cnpj_cpf = table.Column<string>(type: "character varying(14)", maxLength: 14, nullable: false),
+                    nome_fantasia = table.Column<string>(type: "text", nullable: false),
+                    razao_social = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -30,11 +31,11 @@ namespace MiniTMS.Dados.Migrations
                 name: "destinatarios",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    cnpj_cpf = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: false),
-                    nome_fantasia = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    razao_social = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    cnpj_cpf = table.Column<string>(type: "character varying(14)", maxLength: 14, nullable: false),
+                    nome_fantasia = table.Column<string>(type: "text", nullable: false),
+                    razao_social = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -45,15 +46,15 @@ namespace MiniTMS.Dados.Migrations
                 name: "entregadores",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    sobrenome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    data_nascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    cpf = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
-                    rg = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: false),
-                    carro = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    placa = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false)
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    nome = table.Column<string>(type: "text", nullable: false),
+                    sobrenome = table.Column<string>(type: "text", nullable: false),
+                    data_nascimento = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    cpf = table.Column<string>(type: "character varying(11)", maxLength: 11, nullable: false),
+                    rg = table.Column<string>(type: "character varying(9)", maxLength: 9, nullable: false),
+                    carro = table.Column<string>(type: "text", nullable: false),
+                    placa = table.Column<string>(type: "character varying(7)", maxLength: 7, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -64,11 +65,11 @@ namespace MiniTMS.Dados.Migrations
                 name: "produtos",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    valor = table.Column<double>(type: "float", nullable: false),
-                    peso = table.Column<double>(type: "float", nullable: false)
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    nome = table.Column<string>(type: "text", nullable: false),
+                    valor = table.Column<double>(type: "double precision", nullable: false),
+                    peso = table.Column<double>(type: "double precision", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -79,9 +80,9 @@ namespace MiniTMS.Dados.Migrations
                 name: "status",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    nome = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    nome = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -92,19 +93,19 @@ namespace MiniTMS.Dados.Migrations
                 name: "enderecos",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    telefone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
-                    cep = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
-                    endereco = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    numero = table.Column<int>(type: "int", nullable: false),
-                    complemento = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    bairro = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    cidade = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    uf = table.Column<string>(type: "nvarchar(2)", maxLength: 2, nullable: false),
-                    entregador_id = table.Column<int>(type: "int", nullable: true),
-                    destinatario_id = table.Column<int>(type: "int", nullable: true),
-                    cliente_id = table.Column<int>(type: "int", nullable: true)
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    telefone = table.Column<string>(type: "character varying(11)", maxLength: 11, nullable: false),
+                    cep = table.Column<string>(type: "character varying(8)", maxLength: 8, nullable: false),
+                    endereco = table.Column<string>(type: "text", nullable: false),
+                    numero = table.Column<int>(type: "integer", nullable: false),
+                    complemento = table.Column<string>(type: "text", nullable: true),
+                    bairro = table.Column<string>(type: "text", nullable: false),
+                    cidade = table.Column<string>(type: "text", nullable: false),
+                    uf = table.Column<string>(type: "character varying(2)", maxLength: 2, nullable: false),
+                    entregador_id = table.Column<int>(type: "integer", nullable: true),
+                    destinatario_id = table.Column<int>(type: "integer", nullable: true),
+                    cliente_id = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -133,17 +134,16 @@ namespace MiniTMS.Dados.Migrations
                 name: "pedidos",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    valor = table.Column<double>(type: "float", nullable: false),
-                    frete = table.Column<double>(type: "float", nullable: false),
-                    data_de_entrega_prevista = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    data_de_entrega = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    clientes_id = table.Column<int>(type: "int", nullable: false),
-                    destinatarios_id = table.Column<int>(type: "int", nullable: false),
-                    status_id = table.Column<int>(type: "int", nullable: false),
-                    nro_externo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    entregadores_id = table.Column<int>(type: "int", nullable: false)
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    valor = table.Column<double>(type: "double precision", nullable: false),
+                    frete = table.Column<double>(type: "double precision", nullable: false),
+                    data_de_entrega_prevista = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    data_de_entrega = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    clientes_id = table.Column<int>(type: "integer", nullable: false),
+                    destinatarios_id = table.Column<int>(type: "integer", nullable: false),
+                    status_id = table.Column<int>(type: "integer", nullable: false),
+                    entregadores_id = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -174,8 +174,8 @@ namespace MiniTMS.Dados.Migrations
                 name: "pedidos_produtos",
                 columns: table => new
                 {
-                    pedidos_id = table.Column<int>(type: "int", nullable: false),
-                    produtos_id = table.Column<int>(type: "int", nullable: false)
+                    pedidos_id = table.Column<int>(type: "integer", nullable: false),
+                    produtos_id = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -210,22 +210,19 @@ namespace MiniTMS.Dados.Migrations
                 name: "ix_enderecos_cliente_id",
                 table: "enderecos",
                 column: "cliente_id",
-                unique: true,
-                filter: "[cliente_id] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "ix_enderecos_destinatario_id",
                 table: "enderecos",
                 column: "destinatario_id",
-                unique: true,
-                filter: "[destinatario_id] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "ix_enderecos_entregador_id",
                 table: "enderecos",
                 column: "entregador_id",
-                unique: true,
-                filter: "[entregador_id] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "ix_entregadores_cpf",
